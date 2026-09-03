@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -ne 4 ]]; then
+  echo "Usage: k9s-open-ingress <name> <namespace> <kubeconfig> <context>" >&2
+  exit 2
+fi
+
+name="$1"
+namespace="$2"
+kubeconfig="$3"
+context="$4"
+
+host=$(kubectl get ingress "$name" --namespace "$namespace" --kubeconfig "$kubeconfig" --context "$context" -o jsonpath='{.spec.rules[0].host}')
+if [[ -z "$host" ]]; then
+  echo "Ingress '$namespace/$name' has no host in spec.rules." >&2
+  exit 1
+fi
+
+url="https://$host"
+if command -v open >/dev/null 2>&1; then
+  open "$url"
+elif command -v xdg-open >/dev/null 2>&1; then
+  xdg-open "$url"
+else
+  echo "$url"
+  echo "No supported browser opener found (tried open and xdg-open)." >&2
+  exit 1
+fi

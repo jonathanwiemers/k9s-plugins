@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -ne 5 ]]; then
+  echo "Usage: k9s-copy-workload-image <kind> <name> <namespace> <kubeconfig> <context>" >&2
+  exit 2
+fi
+
+kind="$1"
+name="$2"
+namespace="$3"
+kubeconfig="$4"
+context="$5"
+
+images=$(kubectl get "$kind" "$name" --namespace "$namespace" --kubeconfig "$kubeconfig" --context "$context" -o jsonpath='{range .spec.template.spec.containers[*]}{.image}{"\n"}{end}')
+if [[ -z "$images" ]]; then
+  echo "No container images found on '$namespace/$kind/$name'." >&2
+  exit 1
+fi
+
+if command -v pbcopy >/dev/null 2>&1; then
+  printf '%s' "$images" | pbcopy
+elif command -v wl-copy >/dev/null 2>&1; then
+  printf '%s' "$images" | wl-copy
+elif command -v xclip >/dev/null 2>&1; then
+  printf '%s' "$images" | xclip -selection clipboard
+else
+  printf '%s\n' "$images"
+  echo "No supported clipboard command found (tried pbcopy, wl-copy, and xclip)." >&2
+  exit 1
+fi

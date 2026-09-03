@@ -1,0 +1,302 @@
+plugins:
+  flux-reconcile-hr:
+    shortCut: Shift-R
+    confirm: true
+    description: "Flux Reconcile"
+    scopes:
+      - helmreleases
+      - helmrelease
+      - hr
+    command: flux
+    background: false
+    args:
+      - reconcile
+      - hr
+      - $NAME
+      - -n
+      - $NAMESPACE
+      - --kubeconfig
+      - $KUBECONFIG
+      - --context
+      - $CONTEXT
+
+  flux-reconcile-ks:
+    shortCut: Shift-K
+    confirm: true
+    description: "Flux: reconcile Kustomization"
+    scopes:
+      - kustomizations
+      - kustomization
+      - ks
+    command: flux
+    background: false
+    args:
+      - reconcile
+      - kustomization
+      - $NAME
+      - -n
+      - $NAMESPACE
+      - --kubeconfig
+      - $KUBECONFIG
+      - --context
+      - $CONTEXT
+
+  flux-reconcile-git-source:
+    shortCut: Shift-G
+    confirm: true
+    description: "Flux: reconcile Git source"
+    scopes:
+      - gitrepositories
+      - gitrepository
+    command: flux
+    background: false
+    args:
+      - reconcile
+      - source
+      - git
+      - $NAME
+      - -n
+      - $NAMESPACE
+      - --kubeconfig
+      - $KUBECONFIG
+      - --context
+      - $CONTEXT
+
+  flux-reconcile-helm-source:
+    shortCut: Shift-H
+    confirm: true
+    description: "Flux: reconcile Helm source"
+    scopes:
+      - helmrepositories
+      - helmrepository
+    command: flux
+    background: false
+    args:
+      - reconcile
+      - source
+      - helm
+      - $NAME
+      - -n
+      - $NAMESPACE
+      - --kubeconfig
+      - $KUBECONFIG
+      - --context
+      - $CONTEXT
+
+  flux-reconcile-oci-source:
+    shortCut: Ctrl-O
+    confirm: true
+    description: "Flux: reconcile OCI source"
+    scopes:
+      - ocirepositories
+      - ocirepository
+    command: flux
+    background: false
+    args:
+      - reconcile
+      - source
+      - oci
+      - $NAME
+      - -n
+      - $NAMESPACE
+      - --kubeconfig
+      - $KUBECONFIG
+      - --context
+      - $CONTEXT
+
+  flux-reconcile-bucket-source:
+    shortCut: Shift-B
+    confirm: true
+    description: "Flux: reconcile Bucket source"
+    scopes:
+      - buckets
+      - bucket
+    command: flux
+    background: false
+    args:
+      - reconcile
+      - source
+      - bucket
+      - $NAME
+      - -n
+      - $NAMESPACE
+      - --kubeconfig
+      - $KUBECONFIG
+      - --context
+      - $CONTEXT
+
+  flux-suspend-hr:
+    shortCut: Ctrl-F
+    confirm: true
+    description: "Flux: suspend HelmRelease"
+    scopes:
+      - helmreleases
+      - helmrelease
+      - hr
+    command: flux
+    background: false
+    args: [suspend, hr, $NAME, -n, $NAMESPACE, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
+
+  flux-resume-hr:
+    shortCut: Shift-U
+    confirm: true
+    description: "Flux: resume HelmRelease"
+    scopes:
+      - helmreleases
+      - helmrelease
+      - hr
+    command: flux
+    background: false
+    args: [resume, hr, $NAME, -n, $NAMESPACE, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
+
+  flux-suspend-ks:
+    shortCut: Ctrl-P
+    confirm: true
+    description: "Flux: suspend Kustomization"
+    scopes:
+      - kustomizations
+      - kustomization
+      - ks
+    command: flux
+    background: false
+    args: [suspend, kustomization, $NAME, -n, $NAMESPACE, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
+
+  flux-resume-ks:
+    shortCut: Ctrl-U
+    confirm: true
+    description: "Flux: resume Kustomization"
+    scopes:
+      - kustomizations
+      - kustomization
+      - ks
+    command: flux
+    background: false
+    args: [resume, kustomization, $NAME, -n, $NAMESPACE, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
+
+  flux-diff-ks:
+    shortCut: Shift-D
+    confirm: false
+    description: "Flux: diff Kustomization"
+    scopes:
+      - kustomizations
+      - kustomization
+      - ks
+    command: flux
+    background: false
+    args: [diff, kustomization, $NAME, -n, $NAMESPACE, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
+
+  kubectl-describe:
+    shortCut: Shift-E
+    confirm: false
+    description: "Kubectl: describe selected resource"
+    scopes:
+      - all
+    command: kubectl
+    background: false
+    args: [describe, $RESOURCE_NAME, $NAME, -n, $NAMESPACE, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
+
+  kubectl-events:
+    shortCut: Shift-V
+    confirm: false
+    description: "Kubectl: events for selected resource"
+    scopes:
+      - all
+    command: kubectl
+    background: false
+    args: [get, events, -n, $NAMESPACE, --field-selector=involvedObject.name=$NAME, --sort-by=.lastTimestamp, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
+
+  pod-logs:
+    shortCut: Shift-L
+    confirm: false
+    description: "Kubectl: tail all pod logs"
+    scopes:
+      - pods
+      - pod
+      - po
+    command: kubectl
+    background: false
+    args: [logs, -f, $NAME, -n, $NAMESPACE, --all-containers=true, --prefix=true, --timestamps=true, --tail=200, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
+
+  pod-secret-references:
+    shortCut: Shift-Q
+    confirm: false
+    description: "Pod: show referenced Secrets"
+    scopes:
+      - pods
+      - pod
+      - po
+    command: k9s-pod-secret-references
+    background: false
+    args: [$NAME, $NAMESPACE, $KUBECONFIG, $CONTEXT]
+
+  restart-deployment:
+    shortCut: Shift-X
+    confirm: true
+    description: "Kubectl: restart Deployment"
+    scopes:
+      - deployments
+      - deployment
+      - deploy
+    command: kubectl
+    background: false
+    args: [rollout, restart, deployment/$NAME, -n, $NAMESPACE, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
+
+  open-ingress-url:
+    shortCut: Shift-I
+    confirm: false
+    description: "Open Ingress URL"
+    scopes:
+      - ingresses
+      - ingress
+      - ing
+    command: k9s-open-ingress
+    background: true
+    args: [$NAME, $NAMESPACE, $KUBECONFIG, $CONTEXT]
+
+  helm-history:
+    shortCut: Shift-Y
+    confirm: false
+    description: "Helm: release history"
+    scopes:
+      - helmreleases
+      - helmrelease
+      - hr
+    command: helm
+    background: false
+    args: [history, $NAME, -n, $NAMESPACE, --kubeconfig, $KUBECONFIG, --kube-context, $CONTEXT]
+
+  copy-deployment-image:
+    shortCut: Shift-C
+    confirm: false
+    description: "Copy Deployment image"
+    scopes:
+      - deployments
+      - deployment
+      - deploy
+    command: k9s-copy-workload-image
+    background: true
+    args: [deployment, $NAME, $NAMESPACE, $KUBECONFIG, $CONTEXT]
+
+  copy-statefulset-image:
+    shortCut: Shift-T
+    confirm: false
+    description: "Copy StatefulSet image"
+    scopes:
+      - statefulsets
+      - statefulset
+      - sts
+    command: k9s-copy-workload-image
+    background: true
+    args: [statefulset, $NAME, $NAMESPACE, $KUBECONFIG, $CONTEXT]
+
+  copy-daemonset-image:
+    shortCut: Shift-M
+    confirm: false
+    description: "Copy DaemonSet image"
+    scopes:
+      - daemonsets
+      - daemonset
+      - ds
+    command: k9s-copy-workload-image
+    background: true
+    args: [daemonset, $NAME, $NAMESPACE, $KUBECONFIG, $CONTEXT]
