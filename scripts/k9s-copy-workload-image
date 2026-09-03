@@ -1,20 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ $# -ne 5 ]]; then
-  echo "Usage: k9s-copy-workload-image <kind> <name> <namespace> <kubeconfig> <context>" >&2
+if [[ $# -ne 4 ]]; then
+  echo "Usage: k9s-copy-workload-image <pod-name> <namespace> <kubeconfig> <context>" >&2
   exit 2
 fi
 
-kind="$1"
-name="$2"
-namespace="$3"
-kubeconfig="$4"
-context="$5"
+pod_name="$1"
+namespace="$2"
+kubeconfig="$3"
+context="$4"
 
-images=$(kubectl get "$kind" "$name" --namespace "$namespace" --kubeconfig "$kubeconfig" --context "$context" -o jsonpath='{range .spec.template.spec.containers[*]}{.image}{"\n"}{end}')
+images=$(kubectl get pod "$pod_name" --namespace "$namespace" --kubeconfig "$kubeconfig" --context "$context" -o jsonpath='{range .spec.containers[*]}{.image}{"\n"}{end}')
 if [[ -z "$images" ]]; then
-  echo "No container images found on '$namespace/$kind/$name'." >&2
+  echo "No container images found on Pod '$namespace/$pod_name'." >&2
   exit 1
 fi
 

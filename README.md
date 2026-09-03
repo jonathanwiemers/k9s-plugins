@@ -20,7 +20,7 @@ Portable K9s plugins for common Flux, Helm, and Kubernetes workflows.
 | Deployment | `Shift-X` | Restart rollout |
 | Ingress | `Shift-I` | Open first configured host |
 | HelmRelease | `Shift-Y` | Helm release history |
-| Deployment, StatefulSet, DaemonSet | `Shift-C`, `Shift-T`, `Shift-M` | Copy container image |
+| Pod | `Shift-C` | Copy container images |
 
 Reconcile, suspend, resume, and restart actions always require confirmation.
 

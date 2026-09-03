@@ -265,38 +265,14 @@ plugins:
     background: false
     args: [history, $NAME, -n, $NAMESPACE, --kubeconfig, $KUBECONFIG, --kube-context, $CONTEXT]
 
-  copy-deployment-image:
+  copy-pod-image:
     shortCut: Shift-C
     confirm: false
-    description: "Copy Deployment image"
+    description: "Copy Pod images"
     scopes:
-      - deployments
-      - deployment
-      - deploy
+      - pods
+      - pod
+      - po
     command: k9s-copy-workload-image
     background: true
-    args: [deployment, $NAME, $NAMESPACE, $KUBECONFIG, $CONTEXT]
-
-  copy-statefulset-image:
-    shortCut: Shift-T
-    confirm: false
-    description: "Copy StatefulSet image"
-    scopes:
-      - statefulsets
-      - statefulset
-      - sts
-    command: k9s-copy-workload-image
-    background: true
-    args: [statefulset, $NAME, $NAMESPACE, $KUBECONFIG, $CONTEXT]
-
-  copy-daemonset-image:
-    shortCut: Shift-M
-    confirm: false
-    description: "Copy DaemonSet image"
-    scopes:
-      - daemonsets
-      - daemonset
-      - ds
-    command: k9s-copy-workload-image
-    background: true
-    args: [daemonset, $NAME, $NAMESPACE, $KUBECONFIG, $CONTEXT]
+    args: [$NAME, $NAMESPACE, $KUBECONFIG, $CONTEXT]
