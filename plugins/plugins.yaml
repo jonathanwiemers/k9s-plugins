@@ -185,16 +185,6 @@ plugins:
     background: false
     args: [diff, kustomization, $NAME, -n, $NAMESPACE, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
 
-  kubectl-describe:
-    shortCut: Shift-E
-    confirm: false
-    description: "Kubectl: describe selected resource"
-    scopes:
-      - all
-    command: kubectl
-    background: false
-    args: [describe, $RESOURCE_NAME, $NAME, -n, $NAMESPACE, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
-
   kubectl-events:
     shortCut: Shift-V
     confirm: false
@@ -204,42 +194,6 @@ plugins:
     command: kubectl
     background: false
     args: [get, events, -n, $NAMESPACE, --field-selector=involvedObject.name=$NAME, --sort-by=.lastTimestamp, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
-
-  pod-logs:
-    shortCut: Shift-L
-    confirm: false
-    description: "Kubectl: tail all pod logs"
-    scopes:
-      - pods
-      - pod
-      - po
-    command: kubectl
-    background: false
-    args: [logs, -f, $NAME, -n, $NAMESPACE, --all-containers=true, --prefix=true, --timestamps=true, --tail=200, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
-
-  pod-secret-references:
-    shortCut: Shift-Q
-    confirm: false
-    description: "Pod: show referenced Secrets"
-    scopes:
-      - pods
-      - pod
-      - po
-    command: k9s-pod-secret-references
-    background: false
-    args: [$NAME, $NAMESPACE, $KUBECONFIG, $CONTEXT]
-
-  restart-deployment:
-    shortCut: Shift-X
-    confirm: true
-    description: "Kubectl: restart Deployment"
-    scopes:
-      - deployments
-      - deployment
-      - deploy
-    command: kubectl
-    background: false
-    args: [rollout, restart, deployment/$NAME, -n, $NAMESPACE, --kubeconfig, $KUBECONFIG, --context, $CONTEXT]
 
   open-ingress-url:
     shortCut: Shift-I

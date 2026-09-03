@@ -15,14 +15,12 @@ Portable K9s plugins for common Flux, Helm, and Kubernetes workflows.
 | HelmRelease | `Ctrl-F` / `Shift-U` | Suspend / resume |
 | Kustomization | `Ctrl-P` / `Ctrl-U` | Suspend / resume |
 | Kustomization | `Shift-D` | Diff |
-| Any resource | `Shift-E` / `Shift-V` | Describe / related events |
-| Pod | `Shift-L` / `Shift-Q` | Tail logs / list Secret references |
-| Deployment | `Shift-X` | Restart rollout |
+| Any resource | `Shift-V` | Related events |
 | Ingress | `Shift-I` | Open first configured host |
 | HelmRelease | `Shift-Y` | Helm release history |
 | Pod | `Shift-C` | Copy container images |
 
-Reconcile, suspend, resume, and restart actions always require confirmation.
+Reconcile, suspend, and resume actions always require confirmation.
 
 ## Install
 
@@ -66,7 +64,6 @@ Restart K9s if scripts changed. Review each update before using write actions.
 - FluxCD CLI for Flux actions. It must provide `flux reconcile`; the InfluxData
   query-language binary named `flux` is not compatible.
 - `helm` for release history
-- `python3` for Pod Secret-reference inspection
 - A browser opener: `open` (macOS) or `xdg-open` (Linux)
 - A clipboard tool: `pbcopy` (macOS), `wl-copy`, or `xclip` (Linux)
 
@@ -74,9 +71,6 @@ Restart K9s if scripts changed. Review each update before using write actions.
 
 This repository contains no credential, cluster, or provider-login setup. It
 uses the active K9s kubeconfig and context through K9s runtime variables.
-
-`Pod: show referenced Secrets` reads only the Pod specification and prints
-Secret names plus reference locations. It never reads or prints Secret data.
 
 All commands operate on the active K9s context. Read descriptions and confirm
 dialogs carefully before approving a mutating action.
